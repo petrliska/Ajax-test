@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ajax</title>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+    </script>
+    <script>
+      $(document).ready(function()
+      {
+        $("button").click(function()
+        {
+          var refreshId = setInterval(function()
+          {
+            $.get("time.php?randval=" + Math.random(),function(data)
+            {
+              $("#result1").text(data);
+            });
+            //$.ajaxSetup({ cache: false });        //mělo by odstraňovat chybu IE7
+          }, 100);
+        });
+      });
+    </script>
+    
+    <style>
+      div.test
+      {
+        margin: 10px;
+      }
+      div.test_icon
+      {
+        position: absolute;
+        width:20px;
+        height: 20px;
+        background-color: green;
+      }
+      div.test_text
+      {
+        position: absolute;
+        height: 20px;
+        width: 300px; 
+        left: 50px;
+      }
+      div.result_text
+      {
+        position: absolute;
+        margin: 10px; 
+        left: 10px;
+      }
+    </style>
+  </head>
+  
+  <body>
+    <h2>AJAX</h2>
+    <button>Request time</button>
+    <div class="test">
+      <div class="test_icon"></div>
+      <div class="test_text">Tenhle text znám celou dobu</div>
+      <div class="result_text">
+        <p id="result1"></p>
+      </div>    
+    </div>
+  </body>
+</html>
