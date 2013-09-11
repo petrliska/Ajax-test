@@ -10,11 +10,15 @@
       {
         $("button").click(function()
         {
-          $.get("time.php",function(data)
+          var refreshId = setInterval(function()
           {
-            $("#myDiv").html("<p>" + data + "</p>");
-            //$("#myDiv").text(data);             //stejné, ale bez <p>
-          });
+            $.get("time.php?randval=" + Math.random(),function(data)
+            {
+              $("#myDiv").html("<p>" + data + "</p>");
+              //$("#myDiv").text(data);             //stejné, ale bez <p>
+            });
+            //$.ajaxSetup({ cache: false });        //mělo by odstraňovat chybu IE7
+          }, 100);
         });
       });
           //xmlhttp.open("GET","time.php",true);
