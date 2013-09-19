@@ -5,6 +5,8 @@
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
     </script>
+
+    
     <script>
       $(document).ready(function()
       {
@@ -12,38 +14,37 @@
         {
           var refreshId = setInterval(function()
           {
-            $.get("time.php?randval=" + Math.random(),function(data)
+            $.getJSON("time.php?randval=" + Math.random(),function(json)
             {
-              $("#result1").text(data);
+              $("#result1").html(json[0]);
+              $("#result2").html(json[1]);
+              $("#result3").html(json[2]);
             });
             //$.ajaxSetup({ cache: false });        //mělo by odstraňovat chybu IE7
-          }, 100);
+          }, 1000);
         });
       });
     </script>
     
     <style>
-      div.test
+      span.test
       {
-        margin: 10px;
+        margin: 20px;
       }
-      div.test_icon
+      span.test_icon
       {
-        position: absolute;
         width:20px;
         height: 20px;
         background-color: green;
       }
-      div.test_text
+      span.test_text
       {
-        position: absolute;
         height: 20px;
         width: 300px; 
         left: 50px;
       }
       div.result_text
       {
-        position: absolute;
         margin: 10px; 
         left: 10px;
       }
@@ -53,12 +54,23 @@
   <body>
     <h2>AJAX</h2>
     <button>Request time</button>
-    <div class="test">
-      <div class="test_icon"></div>
-      <div class="test_text">Tenhle text znám celou dobu</div>
-      <div class="result_text">
-        <p id="result1"></p>
-      </div>    
+    <p><span class="test_icon">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;Test č. 1
+    </p>
+    <div class="result_text">
+      <div id="result1"></div>
     </div>
+    
+    <p><span class="test_icon">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;Test č. 2
+    </p>
+    <div class="result_text">
+      <div id="result2"></div>
+    </div>
+    
+    <p><span class="test_icon">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;Test č. 3
+    </p>
+    <div class="result_text">
+      <div id="result3"></div>
+    </div>    
+
   </body>
 </html>
