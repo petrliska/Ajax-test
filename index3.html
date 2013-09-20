@@ -12,13 +12,40 @@
       {
         $("button").click(function()
         {
+          $.get("test.php?randval=" + Math.random(), function(data)
+          {
+            $("#ack").text(data);
+          });
+        });
+        $("#icon1").click(function(){
           var refreshId = setInterval(function()
           {
-            $.getJSON("time.php?randval=" + Math.random(),function(json)
+            $.post("get_results.php?randval=" + Math.random(), {'id': "1"}, function(data)
             {
-              $("#result1").html(json[0]);
-              $("#result2").html(json[1]);
-              $("#result3").html(json[2]);
+              $("#result1").html(data);
+            });
+          }, 1000);
+          $("#result1").slideToggle();            
+            //$.ajaxSetup({ cache: false });        //mělo by odstraňovat chybu IE7
+        });
+        $("#icon2").click(function(){
+          $("#result2").slideToggle();
+          var refreshId = setInterval(function()
+          {
+            $.post("get_results.php?randval=" + Math.random(), {'id': "2"}, function(data)
+            {
+              $("#result2").html(data);
+            });
+            //$.ajaxSetup({ cache: false });        //mělo by odstraňovat chybu IE7
+          }, 1000);
+        });
+        $("#icon3").click(function(){
+          $("#result3").slideToggle();
+          var refreshId = setInterval(function()
+          {
+            $.post("get_results.php?randval=" + Math.random(), {'id': "3"}, function(data)
+            {
+              $("#result3").html(data);
             });
             //$.ajaxSetup({ cache: false });        //mělo by odstraňovat chybu IE7
           }, 1000);
@@ -43,10 +70,12 @@
         width: 300px; 
         left: 50px;
       }
-      div.result_text
+      .result
       {
-        margin: 10px; 
+        margin: 10px;
+        min-height: 12px;
         left: 10px;
+        display: none;
       }
     </style>
   </head>
@@ -54,23 +83,18 @@
   <body>
     <h2>AJAX</h2>
     <button>Request time</button>
-    <p><span class="test_icon">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;Test č. 1
+    <p id="ack"></p>
+    <p><span id="icon1", class="test_icon">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;Test č. 1
     </p>
-    <div class="result_text">
-      <div id="result1"></div>
-    </div>
+    <div id="result1", class="result"></div>
     
-    <p><span class="test_icon">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;Test č. 2
+    <p><span id="icon2", class="test_icon">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;Test č. 2
     </p>
-    <div class="result_text">
-      <div id="result2"></div>
-    </div>
+    <div id="result2", class="result"></div>
     
-    <p><span class="test_icon">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;Test č. 3
+    <p><span id="icon3", class="test_icon">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;Test č. 3
     </p>
-    <div class="result_text">
-      <div id="result3"></div>
-    </div>    
+    <div id="result3", class="result"></div>    
 
   </body>
 </html>
