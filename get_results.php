@@ -1,17 +1,11 @@
-<?php    
-    session_start();   
-    
-    switch ($_POST['id'])
-    {
-      case "1":
-          $txt = $_SESSION["results1"];
-      break;
-      case "2":
-          $txt = $_SESSION["results2"];
-      break;
-      case "3":
-          $txt = $_SESSION["results3"]; 
-      break;
-    }
+<?php
+    $arr = array();       
+    session_start();
+    $arr[] = $_SESSION["results1"];
+    $arr[] = $_SESSION["results2"];
+    $arr[] = $_SESSION["results3"];
+    $txt = json_encode($arr);
+    session_write_close();
     echo $txt;
+    
 ?>

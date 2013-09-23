@@ -16,39 +16,25 @@
           {
             $("#ack").text(data);
           });
+          var refreshId = setInterval(function()
+          {
+            $.getJSON("get_results.php?randval=" + Math.random(),function(json)
+            {
+              $("#result1").html(json[0]);
+              $("#result2").html(json[1]);
+              $("#result3").html(json[2]);
+            });
+          //$.ajaxSetup({ cache: false });        //mělo by odstraňovat chybu IE7
+          }, 1000);
         });
         $("#icon1").click(function(){
-          var refreshId = setInterval(function()
-          {
-            $.post("get_results.php?randval=" + Math.random(), {'id': "1"}, function(data)
-            {
-              $("#result1").html(data);
-            });
-          }, 1000);
-          $("#result1").slideToggle();            
-            //$.ajaxSetup({ cache: false });        //mělo by odstraňovat chybu IE7
+          $("#result1").slideToggle("fast");            
         });
         $("#icon2").click(function(){
-          $("#result2").slideToggle();
-          var refreshId = setInterval(function()
-          {
-            $.post("get_results.php?randval=" + Math.random(), {'id': "2"}, function(data)
-            {
-              $("#result2").html(data);
-            });
-            //$.ajaxSetup({ cache: false });        //mělo by odstraňovat chybu IE7
-          }, 1000);
+          $("#result2").slideToggle("fast");
         });
         $("#icon3").click(function(){
-          $("#result3").slideToggle();
-          var refreshId = setInterval(function()
-          {
-            $.post("get_results.php?randval=" + Math.random(), {'id': "3"}, function(data)
-            {
-              $("#result3").html(data);
-            });
-            //$.ajaxSetup({ cache: false });        //mělo by odstraňovat chybu IE7
-          }, 1000);
+          $("#result3").slideToggle("fast");
         });
       });
     </script>
