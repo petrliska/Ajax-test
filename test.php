@@ -1,30 +1,26 @@
 <?php
     //header("refresh: 3;");	//refresh pomocí PHP nefunguje v načtené HTML stránce
-    session_start();
     
-    $_SESSION["results1"]="";
-    $_SESSION["results2"]="";
-    $_SESSION["results3"]="";
+    $poleTestu = json_decode($_POST['jsonArray']);
+    $number = ($_POST['pocetTestu']);
+    $file = ($_POST['nazevSouboru']);
     
-    for ($i=0; $i<= 10; $i++)
+    foreach ($poleTestu as $test)
     {
-      $datum = StrFTime("%H hodin, %M minut a %S sekund", Time());
       $rnd = rand(1,3);
-      session_start();
-      switch ($rnd)
+      for ($i=0; $i<=$rnd; $i++)
       {
-        case 1:
-          $_SESSION["results1"] .="<p>".$datum."</p>";
-          break;
-        case 2:
-          $_SESSION["results2"] .="<p>".$datum."</p>";
-          break;
-        case 3:
-          $_SESSION["results3"] .="<p>".$datum."</p>";
-          break;
+        $datum = StrFTime("%H hodin, %M minut a %S sekund", Time());
+        $fp = fopen ($file, "a+");
+        fputs($fp,"<p>".$datum."</p>");
+        fclose($fp);
+        sleep(1);
       }
-      session_write_close();
-      sleep(2);
+      $fp = fopen ($file, "a+");
+      fputs($fp,"||");
+      fclose($fp);  
     }
-    echo "test dokoncen";
+    
+    $response = "test dokoncen";
+    echo $response;
 ?>
