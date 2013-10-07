@@ -11,7 +11,7 @@
   <script>
     $(document).ready(function()
     {
-      var refreshId;
+      var refreshId = 0;
       var file;
       var nazevTestu;
       var poleTestu = [];
@@ -47,28 +47,37 @@
               'pocetTestu':number,
               'nazevSouboru':file
             },
-            function(acknowledge)
+          function(acknowledge)
             {
               $("#ack").text(acknowledge);
+              clearInterval(refreshId);
+              refreshId = 0;
+              $.post("delete_file.php",
+                {
+                  'nazevSouboru':file  
+                });
             });
+          if (refreshId == 0)
+            {
+              refreshId = setInterval(function()
+              {
+                $.post("get_results.php",
+                {
+                  'nazevSouboru':file  
+                },
+                function(json)
+                { 
+                  for ( var i = 1; i <= number; i++ )
+                  {
+                    s="#result"+i;
+                    $(s).html(json[i-1]);
+                  }
+                }, "json");
+                //$.ajaxSetup({ cache: false });        //mělo by odstraňovat chybu IE7
+              }, 1000);
+            }
           $(".test_icon").click(function(){
             $(this).parent().next().slideToggle("fast");
-            refreshId = setInterval(function()
-            {
-              $.post("get_results.php",
-              {
-                'nazevSouboru':file  
-              },
-              function(json)
-              {
-                for ( var i = 1; i <= number; i++ )
-                {
-                  s="#result"+i;
-                  $(s).html(json[i-1]);
-                }
-              }, "json");
-        //$.ajaxSetup({ cache: false });        //mělo by odstraňovat chybu IE7
-            }, 1000);
           });
         }
         else
