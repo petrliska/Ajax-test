@@ -12,7 +12,6 @@
     $(document).ready(function()
     {
       var refreshId = 0;
-      var file;
       var nazevTestu;
       var poleTestu = [];
       var checkboxes = $("input[type='checkbox']"), submitButt = $("input[type='submit']");
@@ -41,31 +40,22 @@
           {
             $(this).attr("disabled", true);
           });
-          $.post("test.php",
+          $.post("python.php",
             {
-              'jsonArray':jsonData,
-              'pocetTestu':number,
-              'nazevSouboru':file
+              'jsonArray':jsonData
             },
           function(acknowledge)
             {
               $("#ack").text(acknowledge);
               clearInterval(refreshId);
               refreshId = 0;
-              $.post("delete_file.php",
-                {
-                  'nazevSouboru':file  
-                });
+              $.get("delete_file.php");
             });
           if (refreshId == 0)
             {
               refreshId = setInterval(function()
               {
-                $.post("get_results.php",
-                {
-                  'nazevSouboru':file  
-                },
-                function(json)
+                $.get("get_results.php",function(json)
                 { 
                   for ( var i = 1; i <= number; i++ )
                   {

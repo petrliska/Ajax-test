@@ -1,12 +1,15 @@
 <?php
-    $arr = array();       
+    session_start();    
+    $tmpFile = $_SESSION["file"];
+    session_write_close();
     
-    $file = ($_POST['nazevSouboru']);
-    $content = file($file);
-    $arr = explode("||",$content[0]);
+    $pyscript = "get_results.py";
+    $python = "C:\\Python27\\python.exe";
+    $result = exec($python." ".escapeshellarg($pyscript)." ".escapeshellarg($tmpFile));
     
-    $txt = json_encode($arr);
+    //$content = file($tmpFile);
     
-    echo $txt;
+    //$txt = json_encode($content);
     
+    echo $result;    
 ?>
