@@ -25,17 +25,35 @@ except:
 
 filename = sys.argv[2]
 
+ID = 0
+
 for test in data:
     t=datetime.datetime.now()
-    s= test + ' ' + str(t.hour)+' hodin, '+ str(t.minute)+' minut a '+ str(t.second)+' vteřin'
+    s= str(ID)+ ' ' + test + ' ' + str(t.hour)+' hodin, '+ str(t.minute)+' minut a '+ str(t.second)+' vteřin'
     try:
         f = open(filename, 'a')
         f.write(s+'\n')
         f.close()
+        ID = ID + 1
         time.sleep(1)
     except:
         print 'ERROR 2'
         sys.exit(2)
+
+
+for test in data:
+    t=datetime.datetime.now()
+    s= str(ID)+ ' ' + test + ' ' + str(t.hour)+' hodin, '+ str(t.minute)+' minut a '+ str(t.second)+' vteřin'
+    try:
+        f = open(filename, 'a')
+        f.write(s+'\n')
+        f.close()
+        ID = ID + 1
+        time.sleep(1)
+    except:
+        print 'ERROR 2'
+        sys.exit(2)
+
 
 # Send it to stdout (to PHP)
 print json.dumps(data)

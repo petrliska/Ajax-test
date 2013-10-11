@@ -15,16 +15,24 @@
 import sys
 import json
 
-seznam = []
+slovnik = dict()
 
 try:
+    lastID = int(sys.argv[2])
     filename = sys.argv[1]
     f = open(filename, 'r')
 except:
-    print "Error Delete_file"
+    print "Error Get_result"
     sys.exit(4)
 
 for line in f:
-        seznam.append(line)
+        words = line.split()
+        ID = int(words[0])
+        if (ID>lastID):
+            line2 = " ".join(words[1:])
+            slovnik[ID] = line2
+f.close()
 
-print json.dumps(seznam)
+print json.dumps(slovnik)
+print ID
+

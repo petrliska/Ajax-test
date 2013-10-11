@@ -6,9 +6,10 @@
     
     session_start();
     $_SESSION["file"]=$tmpFile;
+    $_SESSION["lastID"]=-1;
     session_write_close();
     
     exec($python." ".escapeshellarg($pyscript)." ".$_POST['jsonArray']." ".escapeshellarg($tmpFile));
-    //echo ($result);
+
     echo "Test dokoncen";
 ?>

@@ -27,9 +27,8 @@
           { 
             poleTestu.push(nazevTestu);
             number = number+1;
-            s= "result"+number;
             $("#results").append("<p><span class=test_icon id=icon"+number+">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;Test "+nazevTestu+"</p>");
-            $("#results").append("<div class=result id=result"+number+"></div>");
+            $("#results").append("<div class=result id=result_"+nazevTestu+"></div>");
            }
         });
         if (number != 0)       
@@ -55,14 +54,16 @@
             {
               refreshId = setInterval(function()
               {
-                $.get("get_results.php",function(json)
+                $.getJSON("get_results.php",function(json)
                 { 
-                  for ( var i = 1; i <= number; i++ )
+                  $.each( json, function(key,val)
                   {
-                    s="#result"+i;
-                    $(s).html(json[i-1]);
-                  }
-                }, "json");
+                    $("#ack").text(key);
+                    var words = val.split(' ');
+                    s="#result_"+words[0];
+                    $(s).append("<p>"+val+"</p>");
+                  });
+                });
                 //$.ajaxSetup({ cache: false });        //mělo by odstraňovat chybu IE7
               }, 1000);
             }

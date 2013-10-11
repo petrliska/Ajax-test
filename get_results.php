@@ -1,15 +1,16 @@
 <?php
     session_start();    
     $tmpFile = $_SESSION["file"];
+    $lastID = $_SESSION["lastID"];
     session_write_close();
     
     $pyscript = "get_results.py";
     $python = "C:\\Python27\\python.exe";
-    $result = exec($python." ".escapeshellarg($pyscript)." ".escapeshellarg($tmpFile));
+    exec($python." ".escapeshellarg($pyscript)." ".escapeshellarg($tmpFile)." ".$lastID, $result);
     
-    //$content = file($tmpFile);
+    session_start();    
+    $_SESSION["lastID"] = $result[1];
+    session_write_close();    
     
-    //$txt = json_encode($content);
-    
-    echo $result;    
+    echo $result[0];    
 ?>
